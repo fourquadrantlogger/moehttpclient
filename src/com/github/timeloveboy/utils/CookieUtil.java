@@ -1,0 +1,58 @@
+package com.github.timeloveboy.utils;
+
+import okhttp3.Cookie;
+import okhttp3.Headers;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by timeloveboy on 17-3-16.
+ */
+public class CookieUtil {
+    public static Map<String,String> parse(Headers origin){
+        Map m=origin.toMultimap();
+        List<String> ls= (List<String>) m.get("set-cookie");
+
+        Map<String,String> cookies=new HashMap<>();
+        if(ls!=null){
+            return cookies;
+        }
+        for (String s:ls) {
+            String[] propertys=s.split("; ");
+            for (String property:propertys) {
+                String[] k_v=property.split("=");
+                if(k_v.length==2&&k_v[0]!="Domain" &&k_v[0]!="Path"){
+                    cookies.put(k_v[0],k_v[1]);
+                }
+            }
+        }
+        return cookies;
+    }
+
+    public static String cookieraw_fromstring(Map<String,String> cookies){
+        String cookieraw="";
+        if(cookies!=null&&cookies.size()!=0) {
+            for (String key : cookies.keySet()) {
+                String value = cookies.get(key);
+                String cookie=key+"="+value;
+                cookieraw+=cookie+"; ";
+            }
+            cookieraw=cookieraw.substring(0,cookieraw.length()-2);
+        }
+        return cookieraw;
+    }
+    public static String cookieraw_fromcookie(Map<String,Cookie> cookies){
+        String cookieraw="";
+        if(cookies!=null&&cookies.size()!=0) {
+            for (String key : cookies.keySet()) {
+                Cookie value = cookies.get(key);
+                String cookie=key+"="+value.value();
+                cookieraw+=cookie+"; ";
+            }
+            cookieraw=cookieraw.substring(0,cookieraw.length()-2);
+        }
+        return cookieraw;
+    }
+}
