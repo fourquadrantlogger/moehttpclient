@@ -16,7 +16,12 @@ import java.util.Set;
  * Created by timeloveboy on 17-3-15.
  */
 public class MoeHttpClient {
+    public domain_cookie getCookiecenter() {
+        return cookiecenter;
+    }
+
     domain_cookie cookiecenter=new domain_cookie();
+
     OkHttpClient client;
     Request.Builder requestbuilder;
     {

@@ -1,7 +1,5 @@
-package com.timeloveboy;
+package com.github.timeloveboy;
 
-import com.github.timeloveboy.MoeHttpClient;
-import com.github.timeloveboy.utils.CookieUtil;
 import okhttp3.Response;
 
 import java.util.Date;
