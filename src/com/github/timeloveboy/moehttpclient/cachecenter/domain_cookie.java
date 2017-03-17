@@ -27,7 +27,7 @@ public class domain_cookie {
     public Cookie GetCookie(String site, String name) {
 
         for (Cookie c : cookieDB) {
-            if (c.domain().contains(site) && c.name() == name) {
+            if (c.domain().contains(site) && c.name().equals(name)) {
                 return c;
             }
         }
