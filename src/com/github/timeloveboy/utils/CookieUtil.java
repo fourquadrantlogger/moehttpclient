@@ -16,7 +16,7 @@ public class CookieUtil {
         List<String> ls= (List<String>) m.get("set-cookie");
 
         Map<String,String> cookies=new HashMap<>();
-        if(ls!=null){
+        if(ls==null){
             return cookies;
         }
         for (String s:ls) {
