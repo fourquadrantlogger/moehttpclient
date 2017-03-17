@@ -32,13 +32,15 @@ moehttpclient基于okhttpclient，对此进行了修正。
 
 参考test目录示例代码
 
- + .execute()
++ httpclient 函数
+   + httpclient对象包含一个简单的cookie storage
+   + .execute()
  加载MoeHttpClient的cookie，发送（禁止重定向的）请求，并返回response
 
- + .execute_andsavecookies()
+   + .execute_andsavecookies()
  加载MoeHttpClient的cookie，发送（禁止重定向的）请求，自动保存set-cookie，并返回response
 
-  + .execute_andsavecookies_location()
+   + .execute_andsavecookies_location()
   加载MoeHttpClient的cookie，发送（禁止重定向的）请求，自动保存set-cookie，自动重定向，并返回response
 
 ``` java

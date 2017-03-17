@@ -6,7 +6,7 @@ package com.github.timeloveboy.utils;
 
 public final class Log {
     public static void v(Object... objects) {
-        System.out.println();
+
         Object[] var1 = objects;
         int var2 = objects.length;
 
@@ -14,6 +14,6 @@ public final class Log {
             Object o = var1[var3];
             System.out.print(o);
         }
-
+        System.out.println();
     }
 }
