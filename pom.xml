@@ -6,7 +6,7 @@
     <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>moe java httpclient </name>
-    <url>https://github.com/com.timeloveboy/moehttpclient</url>
+    <url>https://github.com/timeloveboy/moehttpclient</url>
     <description> moehttpclient </description>
 
     <build>
@@ -30,8 +30,8 @@
         <testSourceDirectory>test</testSourceDirectory>
     </build>
     <scm>
-        <connection>scm:git:git://github.com/com.timeloveboy/moehttpclient.git</connection>
-        <developerConnection>scm:git:git@github.com/com.timeloveboy/moehttpclient.git</developerConnection>
+        <connection>scm:git:git://github.com/timeloveboy/moehttpclient.git</connection>
+        <developerConnection>scm:git:git@github.com/timeloveboy/moehttpclient.git</developerConnection>
         <url>https://github.com/com.timeloveboy/moehttpclient</url>
         <tag>HEAD</tag>
     </scm>
@@ -139,8 +139,8 @@
     </dependencies>
     <developers>
         <developer>
-            <id>com.timeloveboy</id>
-            <name>com.timeloveboy</name>
+            <id>timeloveboy</id>
+            <name>timeloveboy</name>
             <email>734991033@qq.com</email>
         </developer>
     </developers>
