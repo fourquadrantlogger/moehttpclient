@@ -14,7 +14,7 @@ import java.util.Set;
  * Created by timeloveboy on 17-3-15.
  */
 public class MoeHttpClient {
-    Request.Builder requestbuilder;
+    Request.Builder requestbuilder = new Request.Builder();
     domain_cookie cookiecenter=new domain_cookie();
     OkHttpClient client;
     URL u;
@@ -24,10 +24,6 @@ public class MoeHttpClient {
         builder.followRedirects(false);
         builder.followSslRedirects(false);
         client= builder.build();
-    }
-
-    public MoeHttpClient() {
-        requestbuilder= new Request.Builder();
     }
 
     public MoeHttpClient(domain_cookie cookiecenter, Request.Builder requestbuilder) {
