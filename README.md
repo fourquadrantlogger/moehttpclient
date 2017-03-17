@@ -41,12 +41,12 @@ moehttpclient基于okhttpclient，对此进行了修正。
   + .execute_andsavecookies_location()
   加载MoeHttpClient的cookie，发送（禁止重定向的）请求，自动保存set-cookie，自动重定向，并返回response
 
-```
-        MoeHttpClient gab=new MoeHttpClient();
-        Response res_index=gab.GET("https://.../m/login").execute();
+``` java
+MoeHttpClient gab=new MoeHttpClient();
+Response res_index=gab.GET("https://.../m/login").execute();
 
-        String url_captche="https://.../sso/captcha?nocache="+(new Date().getTime());
-        Response res_captcha=gab.GET(url_captche).execute_andsavecookies();
+String url_captche="https://.../sso/captcha?nocache="+(new Date().getTime());
+Response res_captcha=gab.GET(url_captche).execute_andsavecookies();
 
-        Response res_captcha=gab.GET(url_captche).execute_andsavecookies_location();
+Response res_captcha=gab.GET(url_captche).execute_andsavecookies_location();
 ```
