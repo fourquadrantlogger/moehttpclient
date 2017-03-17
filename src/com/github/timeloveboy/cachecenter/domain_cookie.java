@@ -2,34 +2,37 @@ package com.github.timeloveboy.cachecenter;
 
 import okhttp3.Cookie;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 
 /**
  * Created by timeloveboy on 17-3-15.
  */
 public class domain_cookie {
-    static  Map<String, Map<String, Cookie>> cookieDB;
-    static {
-        cookieDB=new ConcurrentHashMap<>();
-    }
-    public static Map<String, Cookie> GetSiteCookies(String site){
-        return cookieDB.get(site);
+    Set<Cookie> cookieDB = new CopyOnWriteArraySet<>();
+
+    public Set<Cookie> GetSiteCookies(String site){
+        Set<Cookie> result=new HashSet<>();
+        for(Cookie c:result){
+            if(c.name().contains(site)){
+                result.add(c);
+            }
+        }
+
+        return result;
     }
 
-    public static void AddCookie(String site,String name ,Cookie c){
-        if(!cookieDB.containsKey(name)){
-            cookieDB.put(site,new HashMap<String, Cookie>());
-        }
-        cookieDB.get(site).put(name,c);
+    public void AddCookie(Cookie c){
+        cookieDB.add(c);
     }
-    public static void AddCookie(String site,String name ,String  value){
-        if(!cookieDB.containsKey(name)){
-            cookieDB.put(site,new HashMap<String, Cookie>());
-        }
+
+    public void AddCookie(String site,String name ,String value){
         Cookie.Builder cb=new Cookie.Builder();
-        cb.name(name).value(value);
-        cookieDB.get(site).put(name,cb.build());
+        cb.name(name).value(value).domain(site);
+        Cookie c=cb.build();
+       if(!cookieDB.contains(c)){
+           cookieDB.add(c);
+       }
     }
 }

@@ -10,11 +10,13 @@ import okhttp3.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by timeloveboy on 17-3-15.
  */
 public class MoeHttpClient {
+    domain_cookie cookiecenter=new domain_cookie();
     OkHttpClient client;
     Request.Builder requestbuilder;
     {
@@ -36,11 +38,10 @@ public class MoeHttpClient {
     }
 
     public Response execute() {
-        Map<String, Cookie> cs=domain_cookie.GetSiteCookies(u.getHost());
+        Set<Cookie> cs=cookiecenter.GetSiteCookies(u.getHost());
         requestbuilder.header("Cookie", CookieUtil.cookieraw_fromcookie(cs));
         Request request = requestbuilder
                 .build();
-
         Response response;
         try {
             response= client.newCall(request).execute();
@@ -53,8 +54,10 @@ public class MoeHttpClient {
     public Response execute_andsavecookies() {
         Response response=execute();
         Map<String,String> addcookie= CookieUtil.parse(response.headers());
-        for(String key:addcookie.keySet()) {
-            domain_cookie.AddCookie(u.getHost(),key,addcookie.get(key));
+        if(u!=null){
+            for(String key:addcookie.keySet()) {
+                cookiecenter.AddCookie(u.getHost(),key,addcookie.get(key));
+            }
         }
         return response;
     }
