@@ -14,7 +14,7 @@ public class domain_cookie {
 
     public Set<Cookie> GetSiteCookies(String site){
         Set<Cookie> result=new HashSet<>();
-        for(Cookie c:result){
+        for(Cookie c:cookieDB){
             if(c.name().contains(site)){
                 result.add(c);
             }
