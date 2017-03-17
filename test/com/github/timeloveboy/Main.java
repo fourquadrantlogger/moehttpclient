@@ -1,6 +1,6 @@
 package com.github.timeloveboy;
 
-import com.github.timeloveboy.moehttpclient.cachecenter.MoeHttpClient;
+import com.github.timeloveboy.moehttpclient.MoeHttpClient;
 import okhttp3.Response;
 
 import java.util.Date;
