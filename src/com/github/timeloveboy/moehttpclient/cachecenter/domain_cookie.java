@@ -1,4 +1,4 @@
-package com.github.timeloveboy.cachecenter;
+package com.github.timeloveboy.moehttpclient.cachecenter;
 
 import okhttp3.Cookie;
 

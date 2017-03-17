@@ -1,6 +1,5 @@
-package com.github.timeloveboy;
+package com.github.timeloveboy.moehttpclient.cachecenter;
 
-import com.github.timeloveboy.cachecenter.domain_cookie;
 import com.github.timeloveboy.utils.CookieUtil;
 import com.github.timeloveboy.utils.Log;
 import okhttp3.*;
