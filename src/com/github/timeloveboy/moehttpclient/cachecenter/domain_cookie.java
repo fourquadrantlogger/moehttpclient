@@ -24,6 +24,16 @@ public class domain_cookie {
         return result;
     }
 
+    public Cookie GetCookie(String site, String name) {
+
+        for (Cookie c : cookieDB) {
+            if (c.domain().contains(site) && c.name() == name) {
+                return c;
+            }
+        }
+
+        return null;
+    }
     public void AddCookie(Cookie c){
         cookieDB.add(c);
     }
