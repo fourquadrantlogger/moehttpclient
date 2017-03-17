@@ -27,9 +27,15 @@ public class MoeHttpClient {
     }
 
     public MoeHttpClient() {
+
     }
+
     public MoeHttpClient(domain_cookie cookiecenter) {
         this.cookiecenter = cookiecenter;
+    }
+
+    public Request.Builder getRequestbuilder() {
+        return requestbuilder;
     }
 
     public domain_cookie getCookiecenter() {
