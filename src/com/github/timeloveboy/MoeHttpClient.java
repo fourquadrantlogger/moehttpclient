@@ -3,9 +3,7 @@ package com.github.timeloveboy;
 import com.github.timeloveboy.cachecenter.domain_cookie;
 import com.github.timeloveboy.utils.CookieUtil;
 import com.github.timeloveboy.utils.Log;
-import okhttp3.OkHttpClient;
 import okhttp3.*;
-
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,22 +14,31 @@ import java.util.Set;
  * Created by timeloveboy on 17-3-15.
  */
 public class MoeHttpClient {
-    public domain_cookie getCookiecenter() {
-        return cookiecenter;
-    }
-
-    domain_cookie cookiecenter=new domain_cookie();
-
-    OkHttpClient client;
     Request.Builder requestbuilder;
+    domain_cookie cookiecenter=new domain_cookie();
+    OkHttpClient client;
+    URL u;
+
     {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.followRedirects(false);
         builder.followSslRedirects(false);
         client= builder.build();
+    }
+
+    public MoeHttpClient() {
         requestbuilder= new Request.Builder();
     }
-    URL u;
+
+    public MoeHttpClient(domain_cookie cookiecenter, Request.Builder requestbuilder) {
+        this.cookiecenter = cookiecenter;
+        this.requestbuilder = requestbuilder;
+    }
+
+    public domain_cookie getCookiecenter() {
+        return cookiecenter;
+    }
+
     public MoeHttpClient GET(String url)throws MalformedURLException{
         u= new URL(url);
         requestbuilder.get().url(url);
