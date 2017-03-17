@@ -2,7 +2,8 @@ package com.github.timeloveboy.cachecenter;
 
 import okhttp3.Cookie;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 
@@ -15,7 +16,7 @@ public class domain_cookie {
     public Set<Cookie> GetSiteCookies(String site){
         Set<Cookie> result=new HashSet<>();
         for(Cookie c:cookieDB){
-            if(c.name().contains(site)){
+            if (c.domain().contains(site)) {
                 result.add(c);
             }
         }
