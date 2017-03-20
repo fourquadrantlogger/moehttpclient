@@ -31,6 +31,10 @@ public class CookieUtil {
                         && !k_v[0].toLowerCase().equals("expires")
                         ) {
                     cookies.put(k_v[0],k_v[1]);
+
+                    if (k_v[1].toLowerCase().equals("deleteme")) {
+                        cookies.remove(k_v[0]);
+                    }
                 }
             }
         }
