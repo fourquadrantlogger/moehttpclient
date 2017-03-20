@@ -19,6 +19,13 @@ public class MoeHttpClient {
     OkHttpClient client;
     URL u;
 
+    {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.followRedirects(false);
+        builder.followSslRedirects(false);
+        client = builder.build();
+    }
+
     public MoeHttpClient() {
 
     }
