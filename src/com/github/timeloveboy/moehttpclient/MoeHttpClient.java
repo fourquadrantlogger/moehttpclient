@@ -7,6 +7,7 @@ import okhttp3.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,14 +18,13 @@ public class MoeHttpClient {
     Request.Builder requestbuilder = new Request.Builder();
     domain_cookie cookiecenter=new domain_cookie();
     OkHttpClient client;
+
+    public URL getU() {
+        return u;
+    }
+
     URL u;
 
-    {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.followRedirects(false);
-        builder.followSslRedirects(false);
-        client= builder.build();
-    }
 
     public MoeHttpClient() {
 
