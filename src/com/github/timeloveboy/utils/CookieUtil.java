@@ -24,7 +24,12 @@ public class CookieUtil {
             String[] propertys=s.split("; ");
             for (String property:propertys) {
                 String[] k_v=property.split("=");
-                if(k_v.length==2&&! k_v[0].equals("Domain") &&! k_v[0].equals("Path")){
+                if (k_v.length == 2
+                        && !k_v[0].toLowerCase().equals("domain")
+                        && !(k_v[0]).toLowerCase().equals("path")
+                        && !k_v[0].toLowerCase().equals("max-age")
+                        && !k_v[0].toLowerCase().equals("expires")
+                        ) {
                     cookies.put(k_v[0],k_v[1]);
                 }
             }
