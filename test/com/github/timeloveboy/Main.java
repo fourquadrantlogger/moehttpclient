@@ -12,10 +12,9 @@ public class Main {
     public static void main(String[] args)throws Exception {
 	// write your code here
         MoeHttpClient gab=new MoeHttpClient();
-        Response res_index = gab.GET("https://gab.122.gov.cn/m/login").execute();
-
+        Response res_index = gab.GET("https://gab.122.gov.cn/m/login").execute_andsavecookies();
         String url_captche="https://gab.122.gov.cn/sso/captcha?nocache="+(new Date().getTime());
-        Response res_captcha = gab.GET(url_captche).execute_location();
-        Log.v(gab.getCookiecenter().getAllCookie());
+        Response res_captcha = gab.GET(url_captche).execute_andsavecookies_location();
+        Log.v(gab.getCookiecenter().GetSiteCookies("gab.122.gov.cn"));
     }
 }

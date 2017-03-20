@@ -1,44 +1,82 @@
 package com.github.timeloveboy.utils;
 
 import okhttp3.Cookie;
-import okhttp3.Headers;
+import okhttp3.Response;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by timeloveboy on 17-3-16.
  */
 public class CookieUtil {
-    public static Map<String,String> parse(Headers origin){
-        Map m=origin.toMultimap();
+    public static Set<Cookie> parse(Response resp) {
+        Map m = resp.headers().toMultimap();
         List<String> ls= (List<String>) m.get("set-cookie");
 
-        Map<String,String> cookies=new HashMap<>();
+        Map<String, Cookie> cookies = new HashMap<>();
         if(ls==null){
-            return cookies;
+            return null;
         }
         for (String s:ls) {
+            Cookie.Builder cb = new Cookie.Builder();
             String[] propertys=s.split("; ");
+            String key = null, value = null, domain = null;
             for (String property:propertys) {
                 String[] k_v=property.split("=");
-                if (k_v.length == 2
-                        && !k_v[0].toLowerCase().equals("domain")
-                        && !(k_v[0]).toLowerCase().equals("path")
-                        && !k_v[0].toLowerCase().equals("max-age")
-                        && !k_v[0].toLowerCase().equals("expires")
-                        ) {
-                    cookies.put(k_v[0],k_v[1]);
-
-                    if (k_v[1].toLowerCase().equals("deleteme")) {
-                        cookies.remove(k_v[0]);
+                if (k_v.length == 1) {
+                    switch (k_v[0]) {
+                        case "HttpOnly": {
+                            cb.httpOnly();
+                            break;
+                        }
                     }
                 }
+                if (k_v.length == 2) {
+                    switch (k_v[0].toLowerCase()) {
+                        case "domain": {
+                            domain = k_v[1];
+                            cb.domain(k_v[1]);
+                            break;
+                        }
+                        case "path": {
+                            cb.path(k_v[1]);
+                            break;
+                        }
+                        case "max-age": {
+                            //
+                            break;
+                        }
+                        case "expires": {
+                            break;
+                        }
+                        default: {
+                            key = k_v[0];
+                            value = k_v[1];
+                        }
+                    }
+
+                }
+            }
+            if (key == null) {
+                continue;
+            }
+            if (domain == null) {
+                cb.domain(resp.request().url().host());
+            }
+            cb.name(key);
+            cb.value(value);
+            Cookie c = cb.build();
+            cookies.put(key, c);
+
+            if (value.toLowerCase().equals("deleteme")) {
+                cookies.remove(key);
             }
         }
-        return cookies;
+        Set<Cookie> result = new HashSet<>();
+        for (String k : cookies.keySet()) {
+            result.add(cookies.get(k));
+        }
+        return result;
     }
 
     public static String cookieraw_fromstring(Map<String,String> cookies){
