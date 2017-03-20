@@ -55,6 +55,8 @@ public class domain_cookie {
     public void AddCookie(Cookie c) {
         if (cookieDB.containsKey(c.name())) {
             Log.v(cookieDB.get(c.name()), "更新为", c);
+        } else {
+            Log.v(c.name(), "新增", c);
         }
         cookieDB.put(c.name(), c);
     }

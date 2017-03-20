@@ -15,7 +15,7 @@ public class CookieUtil {
 
         Map<String, Cookie> cookies = new HashMap<>();
         if(ls==null){
-            return null;
+            return new HashSet<>();
         }
         for (String s:ls) {
             Cookie.Builder cb = new Cookie.Builder();
