@@ -22,8 +22,8 @@ public class domain_cookie {
             Cookie c = cookieDB.get(s);
             if (site.length() >= c.domain().length()) {
                 //全局域名
-                String childdomain = site.substring(0, site.length() - c.domain().length());
-                if (c.domain().substring(c.domain().length() - site.length()).equals(site)) {
+                String global_domain = site.substring(site.length() - c.domain().length());
+                if (global_domain.equals(c.domain())) {
                     result.add(c);
                 }
             }
