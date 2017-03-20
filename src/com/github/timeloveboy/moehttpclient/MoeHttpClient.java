@@ -48,8 +48,9 @@ public class MoeHttpClient {
     }
 
     public MoeHttpClient GET(String url)throws MalformedURLException{
-        u= new URL(url);
+
         requestbuilder.get().url(url);
+        u = new URL(url);
         return this;
     }
     public MoeHttpClient header(String key,String value){
@@ -81,18 +82,21 @@ public class MoeHttpClient {
         }
         return response;
     }
-    public Response execute_andsavecookies_location() {
+
+    public Response execute_andsavecookies_location() throws Exception {
         Response response=execute_andsavecookies();
         if(response.header("Location")!=null){
-            Log.v(u," 重定向 ",response.header("Location"));
-            requestbuilder.url(response.header("Location")).get();
+            String ur = response.header("Location");
+            Log.v(u, " 重定向 ", ur);
+            requestbuilder.url(ur).get();
+            u = new URL(ur);
             response=execute_andsavecookies_location();
         }
         return response;
     }
     //HttpMethod method,
     public MoeHttpClient POST(String url, Map<String,String> form)throws MalformedURLException{
-        u= new URL(url);
+
         FormBody.Builder reqbuilder = new FormBody.Builder();
         for (String key : form.keySet()) {
             String value = form.get(key);
@@ -100,6 +104,7 @@ public class MoeHttpClient {
         }
         RequestBody formBody = reqbuilder.build();
         requestbuilder.url(url).post(formBody);
+        u = new URL(url);
         return this;
     }
 }
