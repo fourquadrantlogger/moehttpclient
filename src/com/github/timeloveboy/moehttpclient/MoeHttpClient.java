@@ -1,26 +1,24 @@
 package com.github.timeloveboy.moehttpclient;
 
-import com.github.timeloveboy.moehttpclient.cachecenter.domain_cookie;
-import com.github.timeloveboy.utils.CookieUtil;
+import com.github.timeloveboy.moehttpclient.cachecenter.MemoryCookieStore;
 import com.github.timeloveboy.utils.Log;
 import okhttp3.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by timeloveboy on 17-3-15.
  */
 public class MoeHttpClient {
     Request.Builder requestbuilder = new Request.Builder();
-    domain_cookie cookiecenter=new domain_cookie();
     OkHttpClient client;
     URL u;
-
+    MemoryCookieStore cookieStore = new MemoryCookieStore();
     {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.cookieJar(cookieStore);
         builder.followRedirects(false);
         builder.followSslRedirects(false);
         client = builder.build();
@@ -31,8 +29,8 @@ public class MoeHttpClient {
     }
 
 
-    public MoeHttpClient(domain_cookie cookiecenter) {
-        this.cookiecenter = cookiecenter;
+    public MoeHttpClient(MemoryCookieStore cookiecenter) {
+        this.cookieStore = cookiecenter;
     }
 
     public URL getlastReqUrl() {
@@ -43,12 +41,11 @@ public class MoeHttpClient {
         return requestbuilder;
     }
 
-    public domain_cookie getCookiecenter() {
-        return cookiecenter;
+    public MemoryCookieStore getCookiecenter() {
+        return cookieStore;
     }
 
     public MoeHttpClient GET(String url)throws MalformedURLException{
-
         requestbuilder.get().url(url);
         u = new URL(url);
         return this;
@@ -59,8 +56,6 @@ public class MoeHttpClient {
     }
 
     public Response execute() {
-        Set<Cookie> cs=cookiecenter.GetSiteCookies(u.getHost());
-        requestbuilder.header("Cookie", CookieUtil.cookieraw_fromcookie(cs));
         Request request = requestbuilder
                 .build();
         Response response;
@@ -72,25 +67,15 @@ public class MoeHttpClient {
         }
         return response;
     }
-    public Response execute_andsavecookies() {
-        Response response=execute();
-        Map<String,String> addcookie= CookieUtil.parse(response.headers());
-        if(u!=null){
-            for(String key:addcookie.keySet()) {
-                cookiecenter.AddCookie(u.getHost(),key,addcookie.get(key));
-            }
-        }
-        return response;
-    }
 
-    public Response execute_andsavecookies_location() throws Exception {
-        Response response=execute_andsavecookies();
+    public Response execute_location() throws Exception {
+        Response response = execute();
         if(response.header("Location")!=null){
             String ur = response.header("Location");
             Log.v(u, " 重定向 ", ur);
             requestbuilder.url(ur).get();
             u = new URL(ur);
-            response=execute_andsavecookies_location();
+            response = execute_location();
         }
         return response;
     }
