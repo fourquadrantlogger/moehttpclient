@@ -18,11 +18,11 @@ public class domain_cookie {
     public Set<Cookie> GetSiteCookies(String site) {
         Set<Cookie> result = new HashSet<>();
         for (String s : cookieDB.keySet()) {
-            String a, b;
+
             Cookie c = cookieDB.get(s);
             if (site.length() >= c.domain().length()) {
                 //全局域名
-                String childdomain = site.substring(0, c.domain().length() - site.length());
+                String childdomain = site.substring(0, site.length() - c.domain().length());
                 if (c.domain().substring(c.domain().length() - site.length()).equals(site)) {
                     result.add(c);
                 }
