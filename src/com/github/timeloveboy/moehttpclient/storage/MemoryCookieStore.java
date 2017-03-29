@@ -1,4 +1,4 @@
-package com.github.timeloveboy.moehttpclient.cachecenter;
+package com.github.timeloveboy.moehttpclient.storage;
 
 import com.github.timeloveboy.utils.Log;
 import okhttp3.Cookie;
@@ -12,9 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by timeloveboy on 17-3-15.
  */
-public class domain_cookie {
+public class MemoryCookieStore {
     Map<String, Cookie> cookieDB = new ConcurrentHashMap<>();
-
     public Set<Cookie> GetSiteCookies(String site) {
         Set<Cookie> result = new HashSet<>();
         for (String s : cookieDB.keySet()) {
@@ -54,9 +53,9 @@ public class domain_cookie {
 
     public void AddCookie(Cookie c) {
         if (cookieDB.containsKey(c.name())) {
-            Log.v(cookieDB.get(c.name()), "更新为", c);
+            Log.v(cookieDB.get(c.name()), "\t更新为\t", c);
         } else {
-            Log.v(c.name(), "新增", c);
+            Log.v(c.name(), "\t新增\t", c);
         }
         cookieDB.put(c.name(), c);
     }
