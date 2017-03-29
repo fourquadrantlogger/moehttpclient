@@ -102,7 +102,7 @@ public class MoeHttpClient {
             Response newresponse = execute_andsavecookies_location();
             return newresponse;
         }
-
+        return null;
     }
     //HttpMethod method,
     public MoeHttpClient POST(String url, Map<String,String> form)throws MalformedURLException{
