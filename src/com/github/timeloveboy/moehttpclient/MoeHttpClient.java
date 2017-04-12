@@ -54,7 +54,7 @@ public class MoeHttpClient {
         return this;
     }
 
-    public Response execute() {
+    public Response execute() throws Exception {
         Set<Cookie> cs = browserState.getCookies().GetSiteCookies(browserState.nowurl().getHost());
         String cookieraw = CookieUtil.cookieraw_fromcookie(cs);
         Log.v("使用cookie", "\t", cookieraw);
@@ -62,17 +62,11 @@ public class MoeHttpClient {
         Request request = requestbuilder
                 .build();
 
-        Response response;
-        try {
-            response= client.newCall(request).execute();
-        }catch (Exception e){
-            e.printStackTrace();
-            response=null;
-        }
+        Response response = response = client.newCall(request).execute();
         return response;
     }
 
-    public Response execute_andsavecookies() {
+    public Response execute_andsavecookies() throws Exception {
         Response response = execute();
         if (response == null) {
             return null;
@@ -93,9 +87,9 @@ public class MoeHttpClient {
         }
 
         if(response.header("Location")!=null){
-            response.close();
-
             String ur = response.header("Location");
+            response.close();
+            response = null;
             Log.v(browserState.nowurl(), " 重定向 ", ur);
             requestbuilder.url(ur).get();
             browserState.addRequest("GET " + ur);
@@ -119,7 +113,7 @@ public class MoeHttpClient {
     }
 
     public MoeHttpClient POST(String url, byte[] body) throws MalformedURLException {
-        RequestBody binaryBody = RequestBody.create(MediaType.parse(""), body);
+        RequestBody binaryBody = RequestBody.create(MediaType.parse("application/octet-stream"), body);
         requestbuilder.url(url).post(binaryBody);
         browserState.addRequest("POST " + url);
         return this;
