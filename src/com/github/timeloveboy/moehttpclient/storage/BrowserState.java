@@ -3,6 +3,7 @@ package com.github.timeloveboy.moehttpclient.storage;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public class BrowserState {
     MemoryCookieStore cookies;
-    List<String> requestshistory;
+    List<Reqlog> requestshistory;
 
     {
         requestshistory = new ArrayList<>();
@@ -21,22 +22,28 @@ public class BrowserState {
         return cookies;
     }
 
-    public List<String> getRequestshistory() {
+    public List<Reqlog> getRequestshistory() {
         return requestshistory;
     }
 
-    public void addRequest(String req) {
+    public void addRequest(Reqlog req) {
         requestshistory.add(req);
     }
 
     public URL nowurl() {
         URL now = null;
         try {
-            now = new URL(requestshistory.get(requestshistory.size() - 1).substring(4));
-
+            now = new URL(requestshistory.get(requestshistory.size() - 1).url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return now;
+    }
+
+    public boolean SessionOK() {
+        Long span = new Date().getTime() - requestshistory.get(requestshistory.size() - 1).t.getTime();
+        if (span > 15 * 60 * 1000) {
+            return false;
+        } else return true;
     }
 }

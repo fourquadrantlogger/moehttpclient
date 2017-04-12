@@ -1,6 +1,7 @@
 package com.github.timeloveboy.moehttpclient;
 
 import com.github.timeloveboy.moehttpclient.storage.BrowserState;
+import com.github.timeloveboy.moehttpclient.storage.Reqlog;
 import com.github.timeloveboy.utils.CookieUtil;
 import com.github.timeloveboy.utils.Log;
 import okhttp3.*;
@@ -46,7 +47,7 @@ public class MoeHttpClient {
     public MoeHttpClient GET(String url)throws MalformedURLException{
 
         requestbuilder.get().url(url);
-        browserState.addRequest("GET " + url);
+        browserState.addRequest(new Reqlog("GET", url));
         return this;
     }
     public MoeHttpClient header(String key,String value){
@@ -92,7 +93,7 @@ public class MoeHttpClient {
             response = null;
             Log.v(browserState.nowurl(), " 重定向 ", ur);
             requestbuilder.url(ur).get();
-            browserState.addRequest("GET " + ur);
+            browserState.addRequest(new Reqlog("GET", ur));
             Response newresponse = execute_andsavecookies_location();
             return newresponse;
         }
@@ -108,14 +109,14 @@ public class MoeHttpClient {
         }
         RequestBody formBody = reqbuilder.build();
         requestbuilder.url(url).post(formBody);
-        browserState.addRequest("POST " + url);
+        browserState.addRequest(new Reqlog("POST", url));
         return this;
     }
 
     public MoeHttpClient POST(String url, byte[] body) throws MalformedURLException {
         RequestBody binaryBody = RequestBody.create(MediaType.parse("application/octet-stream"), body);
         requestbuilder.url(url).post(binaryBody);
-        browserState.addRequest("POST " + url);
+        browserState.addRequest(new Reqlog("POST", url));
         return this;
     }
 }
