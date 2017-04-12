@@ -117,4 +117,11 @@ public class MoeHttpClient {
         browserState.addRequest("POST " + url);
         return this;
     }
+
+    public MoeHttpClient POST(String url, byte[] body) throws MalformedURLException {
+        RequestBody binaryBody = RequestBody.create(MediaType.parse(""), body);
+        requestbuilder.url(url).post(binaryBody);
+        browserState.addRequest("POST " + url);
+        return this;
+    }
 }
